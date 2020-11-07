@@ -15,21 +15,21 @@ class UserSeederTable extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Fábio Gilberto A. Goncalves',
+            'name' => 'Fabio Gilberto A. Goncalves',
             'email' => 'fabio.drioli@gmail.com',
-            'password' => bycript('12345678'),
+            'password' => bcrypt('12345678'),
         ]);
 
         User::create([
             'name' => 'Ana Clara Soriani',
             'email' => 'ana.clara@gmail.com',
-            'password' => bycript('12345678'),
+            'password' => bcrypt('12345678'),
         ]);
 
         User::create([
             'name' => 'Larissa Soriani Barreto',
             'email' => 'larissa.soriani@gmail.com',
-            'password' => bycript('12345678'),
+            'password' => bcrypt('12345678'),
         ]);
     }
 }

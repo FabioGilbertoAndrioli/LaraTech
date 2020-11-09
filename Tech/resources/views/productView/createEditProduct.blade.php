@@ -24,10 +24,12 @@
                     <input class="form-control" type="number" value="{{$product->price ?? ''}}" step="0.01" name="price" min="0.01">
                 </div>
             @if(!isset($product))
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <button type="submit" class="btn btn-success">Cadastrar</button>
+                <a href="{{route('products.index')}}" class="btn btn-info">Voltar</a>
             @else
                 <button type="submit" class="btn btn-primary">Editar</button>
-                <a class="btn btn-danger" href="">Deletar</a>
+                <a class="btn btn-danger" href="{{route('products.confirmDelete',$product->id)}}">Deletar</a>
+                <a href="{{route('products.index')}}" class="btn btn-info">Voltar</a>
             @endif
             </form>
     </div>

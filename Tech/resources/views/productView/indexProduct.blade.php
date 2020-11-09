@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
+    @if(Session::has('success'))
+ 		<div class="alert alert-success hide-msg" style="float: left; width: 100%; margin: 10px 0px">
+ 			{{Session::get('success')}}
+ 		</div>
+        <hr>
+    @endif
     <table class="table">
         <div class="col-12" style="padding: 0.2%;margin:1%">
             <a class="btn btn-info" href="{{route('products.create')}}">Cadastrar</a>

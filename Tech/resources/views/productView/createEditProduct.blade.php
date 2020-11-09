@@ -1,5 +1,34 @@
-@extends('template.dashboard')
+@extends('layouts.app')
 
 @section('content')
-  <h1>CRIAÇÃO E EDIÇÃO DE PRODUTOS</h1>
+    <div class="container">
+        @if(isset($product))
+            <form action="{{route('products.update',$products)}}" method="POST" >
+            {{ method_field('PUT') }}
+        @else
+            <form  action="{{route('products.store')}}" method="POST">
+        @endif
+                @csrf
+                <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" name="name" id="nome" aria-describedby="emailHelp" placeholder="Nome do produto">
+                </div>
+
+                <div class="form-group">
+                <label for="description">Descrição</label>
+                <input type="text" class="form-control" name="description" id="description" placeholder="Breve descrição do produto">
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Valor</label>
+                    <input class="form-control" type="number" step="0.01" name="price" min="0.01">
+                </div>
+            @if(!isset($product))
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            @else
+                <button type="submit" class="btn btn-primary">Editar</button>
+                <a class="btn btn-danger" href="">Deletar</a>
+            @endif
+            </form>
+    </div>
 @endsection

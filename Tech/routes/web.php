@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-                        
 
-Route::resource('/product', 'Web\ProductController');
+Route::get('/', function(){
+    return view('auth.register');
+});
+Route::resource('/products', 'Web\ProductController')->middleware('auth');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

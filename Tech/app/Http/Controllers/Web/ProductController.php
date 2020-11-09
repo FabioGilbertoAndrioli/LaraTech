@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -36,6 +37,12 @@ class ProductController extends Controller
      */
     public function store(Request $request){
         $requestData = $request->all();
+        if( auth()->user()->products()->create($requestData))
+            return redirect()->route('products.index')->with(['success'=>"Produto editado com sucesso"]);
+        else
+            return redirect()->route("products.confirmDelete",['id' => $product->id])
+            ->withErrors(['errors'=>'Falha ao deletar produto'])
+            ->withInput();
     }
 
     /**
@@ -55,7 +62,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product){
-        return view('productView.createEditProduct');
+        $product = Product::find($product->id);
+        return view('productView.createEditProduct',compact('product'));
     }
 
     /**
@@ -68,10 +76,26 @@ class ProductController extends Controller
     public function update(Request $request, Product $product){
         $product = Product::find($product->id);
         if($product->update($request->all()))
-            return redirect()->route('products')->with(['success'=>"Produto editado com sucesso"]);
+            return redirect()->route('products.index')->with(['success'=>"Produto editado com sucesso"]);
         else
             return redirect()->route("products.edit",['id' => $product->id])
             ->withErrors(['errors'=>'Falha ao editar'])
+            ->withInput();
+    }
+
+    public function confirmDeleteProduct($id){
+        $product = Product::find($id);
+        return view('productView.confirmDelete',compact('product'));
+    }
+
+    public function delete($id){
+        $product = Product::find($id);
+
+        if($product->delete())
+            return redirect()->route('products.index')->with(['success'=>"Produto deletado com sucesso"]);
+        else
+            return redirect()->route("products.edit",['id' => $product->id])
+            ->withErrors(['errors'=>'Falha ao deletar'])
             ->withInput();
     }
 
@@ -82,13 +106,6 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product){
-        $product = $this->product->find($product->id);
 
-        if($product->delete())
-            return redirect()->route('products.index')->with(['success'=>"Produto deletado com sucesso"]);
-        else
-            return redirect()->route("products.edit",['id' => $product->id])
-            ->withErrors(['errors'=>'Falha ao deletar'])
-            ->withInput();
     }
 }

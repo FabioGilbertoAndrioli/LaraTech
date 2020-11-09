@@ -16,10 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-    return view('auth.register');
-});
+Route::get('/', function(){return view('auth.register');});
+
+
 Route::resource('/products', 'Web\ProductController')->middleware('auth');
+Route::get('/ConfirmDeteleProduct/{id}','Web\ProductController@confirmDeleteProduct')->name('products.confirmDelete');
+Route::get('/delete/{id}','Web\ProductController@delete')->name('products.delete');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

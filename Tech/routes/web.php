@@ -20,8 +20,8 @@ Route::get('/', function(){return view('auth.register');});
 
 
 Route::resource('/products', 'Web\ProductController')->middleware('auth');
-Route::get('/ConfirmDeteleProduct/{id}','Web\ProductController@confirmDeleteProduct')->name('products.confirmDelete');
-Route::get('/delete/{id}','Web\ProductController@delete')->name('products.delete');
+Route::get('/ConfirmDeteleProduct/{id}','Web\ProductController@confirmDeleteProduct')->name('products.confirmDelete')->middleware('auth');
+Route::get('/delete/{id}','Web\ProductController@delete')->name('products.delete')->middleware('auth');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

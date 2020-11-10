@@ -25,10 +25,10 @@
        @forelse ($products as $product)
             <tbody>
                 <tr>
-                    <th scope="row">{{$product->id}}</th>
-                    <td>{{$product->name}}</td>
-                    <td>{{$product->description}}</td>
-                    <td>{{$product->price}}</td>
+                        <th scope="row">{{$product->id}}</th>
+                        <td>{{$product->name}}</td>
+                        <td>{{$product->description}}</td>
+                        <td>{{$product->price}}</td>
                     <td>
                         <a href="{{route('products.edit',$product)}}" class="btn btn-info"><i class="fa fa-pencil"></i></a>
                         <a href="{{route('products.confirmDelete',$product->id)}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>

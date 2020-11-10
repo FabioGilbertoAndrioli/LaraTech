@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Product\CreateEditFormRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -25,7 +26,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateEditFormRequest $request)
     {
         $requestData = $request->all();
         if( auth()->user()->products()->create($requestData))
@@ -54,7 +55,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateEditFormRequest $request, $id)
     {
         $product = Product::find($id);
         $product->update($request);

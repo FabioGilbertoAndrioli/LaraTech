@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\Product\CreateEditFormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -35,10 +36,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(CreateEditFormRequest $request){
         $requestData = $request->all();
         if( auth()->user()->products()->create($requestData))
-            return redirect()->route('products.index')->with(['success'=>"Produto editado com sucesso"]);
+            return redirect()->route('products.index')->with(['success'=>"Produto cadastro com sucesso"]);
         else
             return redirect()->route("products.confirmDelete",['id' => $product->id])
             ->withErrors(['errors'=>'Falha ao deletar produto'])
@@ -73,7 +74,7 @@ class ProductController extends Controller
      * @param  \App\Models\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product){
+    public function update(CreateEditFormRequest $request, Product $product){
         $product = Product::find($product->id);
         if($product->update($request->all()))
             return redirect()->route('products.index')->with(['success'=>"Produto editado com sucesso"]);
